@@ -1,0 +1,14 @@
+{
+  "name": "pz-cheeseria-e2e-tests",
+  "version": "1.0.0",
+  "description": "A repository using cypress to test the pz cheeseria",
+  "main": "index.js",
+  "scripts": {
+    "test": "cypress open"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cypress": "^7.3.0"
+  }
+}
