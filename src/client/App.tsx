@@ -11,7 +11,8 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import Badge from '@material-ui/core/Badge';
 // Styles
 import { Wrapper, StyledButton, StyledAppBar, HeaderTypography } from './App.styles';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Dialog, Toolbar, Typography } from '@material-ui/core';
+import DialogItem from './Dialog/DialogItem/DialogItem';
 // Types
 export type CartItemType = {
   id: number;
@@ -30,6 +31,9 @@ const getCheeses = async (): Promise<CartItemType[]> =>
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
+  const [dialogOpen, setDialogOpen] = React.useState(false);
+  const [selectedItem, setSelectedItem] = useState<CartItemType | undefined>();
+
   const { data, isLoading, error } = useQuery<CartItemType[]>(
     'cheeses',
     getCheeses
@@ -67,6 +71,12 @@ const App = () => {
         }
       }, [] as CartItemType[])
     );
+  };
+
+  const handleItemSelect = (item: CartItemType | undefined) => (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setSelectedItem(item);
+    setDialogOpen(true);
   };
 
   if (isLoading) return <LinearProgress />;
@@ -119,10 +129,14 @@ const App = () => {
         />
       </Drawer>
 
+      <Dialog onClose={() => setDialogOpen(false)} open={dialogOpen}>
+        {selectedItem && <DialogItem item={selectedItem} handleAddToCart={handleAddToCart} />}
+      </Dialog>
+
       <Grid container spacing={3}>
         {data?.map(item => (
           <Grid item key={item.id} xs={12} sm={4}>
-            <Item item={item} handleAddToCart={handleAddToCart} />
+            <Item item={item} handleAddToCart={handleAddToCart} handleItemSelect={handleItemSelect} />
           </Grid>
         ))}
       </Grid>
