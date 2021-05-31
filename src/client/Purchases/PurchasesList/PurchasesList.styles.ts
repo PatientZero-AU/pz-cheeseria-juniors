@@ -5,7 +5,7 @@ export const Wrapper = styled.aside`
   width: 500px;
   padding: 20px;
 
-  .button {
-    padding: 1rem;
+  .purchase-item {
+      margin: 1rem;
   }
 `;
