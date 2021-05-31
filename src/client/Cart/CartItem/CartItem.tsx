@@ -11,7 +11,7 @@ type Props = {
 };
 
 const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => (
-  <Wrapper>
+  <Wrapper data-cy={`cart-item-${item.id}`}>
     <div>
       <h3>{item.title}</h3>
       <div className='information'>
