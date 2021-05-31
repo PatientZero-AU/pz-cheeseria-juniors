@@ -193,7 +193,7 @@ const App = () => {
             justify="space-between"
             alignItems="center"
           >
-            <StyledButton onClick={() => handlePurchasesOpen()}>
+            <StyledButton onClick={() => handlePurchasesOpen()} data-cy='recent-purchases-button'>
               <RestoreIcon />
               <Typography variant="subtitle2">
                 Recent Purchases
@@ -204,11 +204,11 @@ const App = () => {
               Welcome to Patient Zero's Cheeseria
             </HeaderTypography>
 
-            <StyledButton onClick={() => setCartOpen(true)}>
+            <StyledButton onClick={() => setCartOpen(true)} data-cy='shopping-cart-button'>
               <Badge
                 badgeContent={getTotalItems(cartItems)}
                 color='error'
-                data-cy="badge-count">
+                data-cy="shopping-cart-badge-count">
                 <AddShoppingCartIcon />
               </Badge>
 
@@ -221,16 +221,17 @@ const App = () => {
         </Toolbar>
       </StyledAppBar>
 
-      <Drawer anchor='left' onClose={handlePurchasesClose} open={purchasesOpen}>
+      <Drawer anchor='left' onClose={handlePurchasesClose} open={purchasesOpen} data-cy='purchases-drawer'>
         <PurchasesList items={purchases} />
       </Drawer>
 
-      <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)}>
+      <Drawer anchor='right' open={cartOpen} onClose={() => setCartOpen(false)} data-cy='cart-drawer'>
         <Cart
           cartItems={cartItems}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
           onPurchase={handlePurchase}
+          onClose={() => setCartOpen(false)}
         />
       </Drawer>
 

@@ -12,7 +12,7 @@ type Props = {
 };
 
 const PurchaseItem: React.FC<Props> = ({ item }) => (
-    <Wrapper className='purchase-item'>
+    <Wrapper className='purchase-item' data-cy={`recent-purchase-item-${item.dateTime}`}>
         <Accordion>
             <AccordionSummary
                 expandIcon={<ExpandMoreIcon />}

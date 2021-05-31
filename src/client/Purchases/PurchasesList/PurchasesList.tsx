@@ -10,9 +10,9 @@ type Props = {
 };
 
 const PurchasesList: React.FC<Props> = ({ items }) => (
-    <Wrapper>
+    <Wrapper data-cy='recent-purchases-drawer'>
         <h2>Your Purchases</h2>
-        {items?.length === 0 ? <p>There are no purchases.</p> : null}
+        {items?.length === 0 ? <p data-cy='no-recent-purchases-message'>There are no purchases.</p> : null}
         {items?.map(item => (
             <PurchaseItem key={item.id} item={item} />
         ))}
