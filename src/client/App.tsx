@@ -71,7 +71,6 @@ const App = () => {
       setCookie('ID', userId, { path: '/' });
     }
   }, []);
-
   const { data: cheeses, mutate: fetchCheesesMutation } = useMutation(
     getCheeses, {
     onMutate: () => {
