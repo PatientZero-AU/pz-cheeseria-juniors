@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-import { useQuery } from 'react-query';
+import React, { useEffect, useState } from 'react';
+import { useMutation } from 'react-query';
+import { useCookies } from 'react-cookie';
 // Components
 import Item from './Cart/Item/Item';
 import Cart from './Cart/Cart';
@@ -13,6 +14,8 @@ import Badge from '@material-ui/core/Badge';
 import { Wrapper, StyledButton, StyledAppBar, HeaderTypography } from './App.styles';
 import { AppBar, Dialog, Toolbar, Typography } from '@material-ui/core';
 import DialogItem from './Dialog/DialogItem/DialogItem';
+import axios from 'axios';
+import { calculateCartTotalAmount, calculateCartTotalPrice, createUuid } from './helpers/helpers';
 // Types
 export type CartItemType = {
   id: number;
@@ -24,21 +27,72 @@ export type CartItemType = {
   amount: number;
 };
 
+export type PurchaseType = {
+  id: string,
+  userId: string,
+  totalPrice: number,
+  totalItems: number,
+  dateTime: string,
+  cheeses: CartItemType[]
+}
 
 const getCheeses = async (): Promise<CartItemType[]> =>
   await (await fetch(`api/cheeses`)).json();
+
+const createPurchase = async (purchase: PurchaseType) => {
+  const { data: response } = await axios.post('/api/purchase', {
+    purchase
+  });
+  return response;
+};
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
   const [dialogOpen, setDialogOpen] = React.useState(false);
   const [selectedItem, setSelectedItem] = useState<CartItemType | undefined>();
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [cookies, setCookie] = useCookies(['user']);
 
-  const { data, isLoading, error } = useQuery<CartItemType[]>(
-    'cheeses',
-    getCheeses
-  );
-  console.log(data);
+  useEffect(() => {
+    fetchCheesesMutation();
+    getUserId();
+  }, []);
+
+  const getUserId = () => {
+    const userId = cookies.ID || createUuid();
+    setCookie('ID', userId, { path: '/' });
+    return userId;
+  };
+
+  const { data: cheeses, mutate: fetchCheesesMutation } = useMutation(
+    getCheeses, {
+    onMutate: () => {
+      setLoading(true);
+    },
+    onSuccess: () => {
+      setLoading(false);
+    },
+    onError: () => {
+      setLoading(false);
+      setError(true);
+    }
+  });
+
+  const createPurchaseMutation = useMutation(
+    createPurchase, {
+    onMutate: () => {
+      setLoading(true);
+    },
+    onSuccess: () => {
+      setLoading(false);
+    },
+    onError: () => {
+      setLoading(false);
+      setError(true);
+    }
+  });
 
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0);
@@ -79,7 +133,23 @@ const App = () => {
     setDialogOpen(true);
   };
 
-  if (isLoading) return <LinearProgress />;
+  const handlePurchase = async () => {
+    // Refactor cart Items into purchase type
+    const purchase: PurchaseType = {
+      id: createUuid(),
+      userId: getUserId(),
+      totalPrice: calculateCartTotalPrice(cartItems),
+      totalItems: calculateCartTotalAmount(cartItems),
+      dateTime: new Date().toDateString(),
+      cheeses: cartItems
+    }
+    // Push purchases to Purchases.json
+    await createPurchaseMutation.mutateAsync(purchase);
+    // clear cart items
+    setCartItems([] as CartItemType[]);
+  }
+
+  if (loading) return <LinearProgress />;
   if (error) return <div>Something went wrong ...</div>;
 
   return (
@@ -126,6 +196,7 @@ const App = () => {
           cartItems={cartItems}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
+          onPurchase={handlePurchase}
         />
       </Drawer>
 
@@ -134,7 +205,7 @@ const App = () => {
       </Dialog>
 
       <Grid container spacing={3}>
-        {data?.map(item => (
+        {cheeses?.map(item => (
           <Grid item key={item.id} xs={12} sm={4}>
             <Item item={item} handleAddToCart={handleAddToCart} handleItemSelect={handleItemSelect} />
           </Grid>
