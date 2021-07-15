@@ -10,13 +10,6 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RestoreIcon from '@material-ui/icons/Restore';
 import Badge from '@material-ui/core/Badge';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogContentText from "@material-ui/core/DialogContentText";
-import DialogTitle from "@material-ui/core/DialogTitle";
-import DialogActions from "@material-ui/core/DialogActions";
-import DialogContent from "@material-ui/core/DialogContent";
-
-
 // Styles
 import { Wrapper, StyledButton, StyledAppBar, HeaderTypography } from './App.styles';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
@@ -32,22 +25,11 @@ export type CartItemType = {
   amount: number;
 };
 
-
 const getCheeses = async (): Promise<CartItemType[]> =>
   await (await fetch(`api/cheeses`)).json();
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
-  const [open, setOpen] = useState(false); 
-
-  const handleClickToOpen = () => {
-    setOpen(true); 
-  };
-  
-  const handleToClose = () => {
-    setOpen(false);
-  };
-
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
   const { data, isLoading, error } = useQuery<CartItemType[]>(
     'cheeses',
@@ -58,6 +40,7 @@ const App = () => {
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0);
 
+  
   const handleAddToCart = (clickedItem: CartItemType) => {
     setCartItems(prev => {
       // 1. Is the item already added in the cart?
@@ -73,6 +56,10 @@ const App = () => {
       // First time the item is added
       return [...prev, { ...clickedItem, amount: 1 }];
     });
+  };
+
+  const popupdialog = (clickedItem: CartItemType) => {
+    
   };
 
   const handleRemoveFromCart = (id: number) => {
@@ -140,27 +127,11 @@ const App = () => {
 
       <Grid container spacing={3}>
         {data?.map(item => (
-          <Grid item key={item.id} xs={12} sm={4} onClick={handleClickToOpen}>
-            <Item item={item} handleAddToCart={handleAddToCart} />
+          <Grid item key={item.id} xs={12} sm={4}> 
+            <Item item={item} handleAddToCart={handleAddToCart}/>
           </Grid>
         ))}
       </Grid>
-
-      <Dialog open={open} onClose={handleToClose}>
-        <DialogTitle>{"How are you?"}</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            I am Good, Hope the same for you!
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleToClose} 
-                  color="primary" autoFocus>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-
     </Wrapper>
 
   );
