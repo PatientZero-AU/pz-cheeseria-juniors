@@ -1,0 +1,20 @@
+[
+  {
+    "id": 4,
+    "title": "FETA",
+    "price": 78.65,
+    "description": "Feta is undoubtedly one of the most famous Greek cheeses. In fact, Feta occupies 70% stake in Greek cheese consumption. To create traditional feta, 30 percent of goat's milk is mixed with sheep's milk of animals grazing on pastures in the specific appellation of origin regions.",
+    "category": "soft, brined",
+    "image": "https://www.cheese.com/media/img/cheese/504_feta.jpg",
+    "amount": 1
+  },
+  {
+    "id": 5,
+    "title": "JARLSBERG",
+    "price": 88.15,
+    "description": "Jarlsberg is a mild, semi-soft cow’s milk cheese of Norwegian origin. Created by Anders Larsen Bakke, it resembles a Swiss Emmental with distinctive, open and irregular ‘eyes’. Many a times Jarlsberg is marketed as a Swiss cheese because of its characteristics, though it tends to be sweeter and stronger than Emmentaler.",
+    "category": "open, smooth and supple",
+    "image": "https://www.cheese.com/media/img/cheese/Jarlsberg_in_Wholefoods_2.jpg",
+    "amount": 1
+  }
+]
