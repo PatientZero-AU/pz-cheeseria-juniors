@@ -18,7 +18,7 @@ context('Purchase Actions', () => {
     
         cy.request({
           method : 'POST',
-          url : baseURL+'/api/purchases',
+          url : baseUrl+'/api/purchases',
           body : [
             {
               "id": 5,
