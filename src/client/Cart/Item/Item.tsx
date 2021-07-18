@@ -11,7 +11,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import { CartItemType } from '../../App';
 // Styles
 import { Wrapper } from './Item.styles';
-import Avatar from '@material-ui/core/Avatar';
 
 type Props = {
   item: CartItemType;

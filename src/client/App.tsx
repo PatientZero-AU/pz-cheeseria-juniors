@@ -13,7 +13,6 @@ import Badge from '@material-ui/core/Badge';
 // Styles
 import { Wrapper, StyledButton, StyledAppBar, HeaderTypography } from './App.styles';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
-import { Button } from '@material-ui/core';
 // Types
 export type CartItemType = {
   id: number;
@@ -35,7 +34,7 @@ const App = () => {
     'cheeses',
     getCheeses
   );
-  console.log(data);
+  //console.log(data);
 
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0);
@@ -56,10 +55,6 @@ const App = () => {
       // First time the item is added
       return [...prev, { ...clickedItem, amount: 1 }];
     });
-  };
-
-  const popupdialog = (clickedItem: CartItemType) => {
-    
   };
 
   const handleRemoveFromCart = (id: number) => {

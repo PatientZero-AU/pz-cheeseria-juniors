@@ -1,0 +1,20 @@
+[
+  {
+    "id": 5,
+    "title": "JARLSBERG",
+    "price": 88.15,
+    "description": "Jarlsberg is a mild, semi-soft cow’s milk cheese of Norwegian origin. Created by Anders Larsen Bakke, it resembles a Swiss Emmental with distinctive, open and irregular ‘eyes’. Many a times Jarlsberg is marketed as a Swiss cheese because of its characteristics, though it tends to be sweeter and stronger than Emmentaler.",
+    "category": "open, smooth and supple",
+    "image": "https://www.cheese.com/media/img/cheese/Jarlsberg_in_Wholefoods_2.jpg",
+    "amount": 1
+  },
+  {
+    "id": 6,
+    "title": "MAASDAM",
+    "price": 140,
+    "description": "Maasdam is a traditional, semi-hard Dutch cheese made from cow’s milk. The most characteristic feature is its ‘eyes’ (holes) that make up most of the cheese. The cheese was created in the early 1990s as an alternative to more expensive Swiss Emmental cheese. It is a high-fat cheese with a minimum of 45% fat. Although similar to Emmental, the moisture content in Maasdam is more, making it suppler.",
+    "category": "creamy, open and supple",
+    "image": "https://www.cheese.com/media/img/cheese/wiki/maasdam.jpg",
+    "amount": 1
+  }
+]
