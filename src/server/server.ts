@@ -29,22 +29,6 @@ app.post('/api/purchases', (req, res, next) => {
 });
 
 app.get('/api/recent_purchases', (req, res, next) => {
-    //res.send("hello");
-
-    /*var jsonPath = path.join(__dirname, '..', 'src', 'server', 'data');
-    fs.readdir(jsonPath, (err, files) => {
-        if (err)
-            console.log(err);
-        else {
-            //console.log("\Filenames with the .json extension:");
-            files.forEach(file => {
-                if ((path.extname(file) == ".json") && (file.indexOf('purchase') > -1)){
-                    //console.log(file);
-                    //var string = str.split
-                }
-            });
-        }
-    });*/
 
     var jsonPath = path.join(__dirname, '..', 'src', 'server', 'data');
     
@@ -55,10 +39,6 @@ app.get('/api/recent_purchases', (req, res, next) => {
 
     //console.log(files.length ? files[0]['file'] : undefined);
     var file_name = files.length ? files[0]['file'] : undefined;
-
-    //var file_name_full_path = './data/'+file_name;
-    // const recent_purchases = require(file_name_full_path);
-    // res.json(recent_purchases);
 
     let rawdata = fs.readFileSync(path.resolve(__dirname, '..', 'src', 'server', 'data', file_name));
     let recent_purchases = JSON.parse(rawdata);

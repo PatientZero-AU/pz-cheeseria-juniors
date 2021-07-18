@@ -22,10 +22,6 @@ router.get('/api/recent_purchases', (req, res, next) => {
     //console.log(files.length ? files[0]['file'] : undefined);
     var file_name = files.length ? files[0]['file'] : undefined;
 
-    /*var file_name_full_path = './data/'+file_name;
-    const recent_purchases = require(file_name_full_path);
-    res.json(recent_purchases);*/
-
     let rawdata = fs.readFileSync(path.resolve(__dirname, '..', 'src', 'server', 'data', file_name));
     let recent_purchases = JSON.parse(rawdata);
     res.json(recent_purchases);

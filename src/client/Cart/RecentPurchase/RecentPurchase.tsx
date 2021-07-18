@@ -23,22 +23,12 @@ const getRecentPurchase = async (): Promise<RecentItemType[]> =>
 
 const RecentPurchase: React.FC<Props> = () => {
 
-    // const recentPurchases = () => (async () => {
-
-    //     const rawResponse = await fetch('api/recent_purchases');
-    //     var body = await rawResponse.json();
-    //     cartItems = body;
-    //     //console.log(body); 
-    //     return body;
-    //   });
-
     const { data, isLoading, error } = useQuery(
         'recent_purchases',
         getRecentPurchase
       );
 
       //console.log(data);
-
 
   return (
     <Wrapper>
