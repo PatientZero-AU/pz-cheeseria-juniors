@@ -86,12 +86,6 @@ const App = () => {
             justify="space-between"
             alignItems="center"
           >
-            {/* <StyledButton onClick={() => recentPurchases()}>
-              <RestoreIcon />
-              <Typography variant="subtitle2">
-                Recent Purchases
-              </Typography>
-            </StyledButton> */}
 
             <StyledButton onClick={() => setRecentOpen(true)}>
               <RestoreIcon />

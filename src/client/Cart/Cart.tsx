@@ -25,7 +25,7 @@ const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
   // };
 
   const purchase = (items: CartItemType[]) => (async () => {
-
+    console.log(JSON.stringify(items));
     await fetch('api/purchases', {
       method: 'POST',
       headers: {
@@ -50,8 +50,9 @@ const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
         />
       ))}
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
-      <Button variant='contained' size='small'
-          disableElevation onClick={() => purchase(cartItems)}>Purchase</Button>
+      {cartItems.length === 0 ? null : <Button variant='contained' size='small'
+          disableElevation data-cy={`purchase`} onClick={() => purchase(cartItems)}>Purchase</Button>} 
+      
     </Wrapper>
   );
 };
