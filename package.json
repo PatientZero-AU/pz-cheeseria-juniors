@@ -13,7 +13,6 @@
     "@types/react-dom": "^16.9.10",
     "@types/styled-components": "^5.1.7",
     "express": "^4.17.1",
-    "open-browser-plugin": "^1.1.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-query": "^3.5.11",
