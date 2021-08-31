@@ -8,22 +8,14 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import Badge from '@material-ui/core/Badge';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Toolbar, Typography } from '@material-ui/core';
 
 // Components
 import Item from './Cart/Item/Item';
 import Cart from './Cart/Cart';
 
 // Styles
-import {
-  Wrapper,
-  StyledButton,
-  StyledAppBar,
-  HeaderTypography,
-  DialogImage,
-  StyledDialogTitle,
-  DialogText,
-} from './App.styles';
+import * as S from './App.styles';
 
 // Cart types
 import { CartItemType } from './Cart/Cart.types';
@@ -93,8 +85,8 @@ const App = () => {
   if (error) return <div>Something went wrong ...</div>;
 
   return (
-    <Wrapper>
-      <StyledAppBar position="static">
+    <S.Wrapper>
+      <S.StyledAppBar position="static">
         <Toolbar>
           <Grid
             container
@@ -102,16 +94,16 @@ const App = () => {
             justify="space-between"
             alignItems="center"
           >
-            <StyledButton>
+            <S.StyledButton>
               <RestoreIcon />
               <Typography variant="subtitle2">Recent Purchases</Typography>
-            </StyledButton>
+            </S.StyledButton>
 
-            <HeaderTypography variant="h3" noWrap>
+            <S.HeaderTypography variant="h3" noWrap>
               Welcome to Patient Zero's Cheeseria
-            </HeaderTypography>
+            </S.HeaderTypography>
 
-            <StyledButton onClick={() => setCartOpen(true)}>
+            <S.StyledButton onClick={() => setCartOpen(true)}>
               <Badge
                 badgeContent={getTotalItems(cartItems)}
                 color="error"
@@ -121,10 +113,10 @@ const App = () => {
               </Badge>
 
               <Typography variant="subtitle2">Cart</Typography>
-            </StyledButton>
+            </S.StyledButton>
           </Grid>
         </Toolbar>
-      </StyledAppBar>
+      </S.StyledAppBar>
 
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
@@ -139,15 +131,18 @@ const App = () => {
         aria-labelledby="simple-dialog-title"
         open={dialogOpen}
       >
-        <DialogImage src={dialogContent.image} alt={`${dialogContent.title}`} />
+        <S.DialogImage
+          src={dialogContent.image}
+          alt={`${dialogContent.title}`}
+        />
         <DialogContent>
-          <StyledDialogTitle id="simple-dialog-title">
+          <S.StyledDialogTitle id="simple-dialog-title">
             {dialogContent.title}
-          </StyledDialogTitle>
-          <DialogText>{dialogContent.description}</DialogText>
-          <DialogText>{dialogContent.category}</DialogText>
-          <DialogText>{dialogContent.price}</DialogText>
-          <DialogText>{dialogContent.amount}</DialogText>
+          </S.StyledDialogTitle>
+          <S.DialogText>{dialogContent.description}</S.DialogText>
+          <S.DialogText>{dialogContent.category}</S.DialogText>
+          <S.DialogText>{dialogContent.price}</S.DialogText>
+          <S.DialogText>{dialogContent.amount}</S.DialogText>
         </DialogContent>
       </Dialog>
 
@@ -162,7 +157,7 @@ const App = () => {
           </Grid>
         ))}
       </Grid>
-    </Wrapper>
+    </S.Wrapper>
   );
 };
 
