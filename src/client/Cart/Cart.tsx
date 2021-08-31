@@ -1,12 +1,8 @@
 import CartItem from './CartItem/CartItem';
 import { Wrapper } from './Cart.styles';
-import { CartItemType } from '../App';
 
-type Props = {
-  cartItems: CartItemType[];
-  addToCart: (clickedItem: CartItemType) => void;
-  removeFromCart: (id: number) => void;
-};
+// Cart item types
+import { CartItemType, Props } from './Cart.types';
 
 const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
   const calculateTotal = (items: CartItemType[]) =>
@@ -16,7 +12,7 @@ const Cart: React.FC<Props> = ({ cartItems, addToCart, removeFromCart }) => {
     <Wrapper>
       <h2>Your Shopping Cart</h2>
       {cartItems.length === 0 ? <p>No items in cart.</p> : null}
-      {cartItems.map(item => (
+      {cartItems.map((item) => (
         <CartItem
           key={item.id}
           item={item}
