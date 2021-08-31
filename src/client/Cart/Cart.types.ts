@@ -7,3 +7,9 @@ export type CartItemType = {
   title: string;
   amount: number;
 };
+
+export type Props = {
+  cartItems: CartItemType[];
+  addToCart: (clickedItem: CartItemType) => void;
+  removeFromCart: (id: number) => void;
+};

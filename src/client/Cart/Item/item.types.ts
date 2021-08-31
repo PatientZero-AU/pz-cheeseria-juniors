@@ -1,4 +1,4 @@
-import { CartItemType } from '../../App.types';
+import { CartItemType } from '../Cart.types';
 
 export type Props = {
   item: CartItemType;
