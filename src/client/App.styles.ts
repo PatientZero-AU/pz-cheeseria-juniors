@@ -13,12 +13,31 @@ export const DialogImage = styled.img`
   object-fit: cover;
 `;
 
-export const StyledDialogTitle = styled(DialogTitle)`
-  padding-left: 0;
-  padding-right: 0;
+export const DialogHeader = styled.header`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
-export const DialogText = styled.p``;
+export const StyledDialogTitle = styled(DialogTitle)`
+  padding: 0;
+`;
+
+export const DialogText = styled.p`
+  font-size: 16px;
+`;
+
+export const DialogDescription = styled(DialogText)``;
+
+export const DialogCategory = styled(DialogText)`
+  font-size: 18px;
+  text-decoration: capitalize;
+`;
+
+export const DialogPrice = styled(DialogText)`
+  font-weight: bold;
+  font-size: 18px;
+`;
 
 // export const StyledButton = styled(IconButton)`
 

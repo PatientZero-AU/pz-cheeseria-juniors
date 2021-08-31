@@ -136,13 +136,15 @@ const App = () => {
           alt={`${dialogContent.title}`}
         />
         <DialogContent>
-          <S.StyledDialogTitle id="simple-dialog-title">
-            {dialogContent.title}
-          </S.StyledDialogTitle>
+          <S.DialogHeader>
+            <S.StyledDialogTitle id="simple-dialog-title">
+              {dialogContent.title}
+            </S.StyledDialogTitle>
+            <S.DialogPrice>${dialogContent.price}</S.DialogPrice>
+          </S.DialogHeader>
+
           <S.DialogText>{dialogContent.description}</S.DialogText>
           <S.DialogText>{dialogContent.category}</S.DialogText>
-          <S.DialogText>{dialogContent.price}</S.DialogText>
-          <S.DialogText>{dialogContent.amount}</S.DialogText>
         </DialogContent>
       </Dialog>
 
