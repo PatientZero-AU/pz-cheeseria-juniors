@@ -1,11 +1,10 @@
-import * as express from 'express';
-const cheeses = require('./data/cheeses.json');
+import { Router } from "express";
+import { getCheeses } from "./controller/cheese";
+import healthCheck from "./controller/healthCheck";
 
-const router = express.Router();
+const router = Router();
 
-router.get('/api/cheeses', (req, res, next) => {
-
-    res.json(cheeses);
-});
+router.get("/api/", healthCheck);
+router.get("/api/cheeses", getCheeses);
 
 export default router;

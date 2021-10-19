@@ -34,7 +34,6 @@ const App = () => {
     'cheeses',
     getCheeses
   );
-  console.log(data);
 
   const getTotalItems = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount, 0);
