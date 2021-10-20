@@ -1,12 +1,13 @@
 import Button from '@material-ui/core/Button';
+import { SyntheticEvent } from 'react';
 // Types
-import { CartItemType } from '../../App';
+import { CartItemType } from '../../../App';
 // Styles
 import { Wrapper } from './CartItem.styles';
 
 type Props = {
   item: CartItemType;
-  addToCart: (clickedItem: CartItemType) => void;
+  addToCart: (e:SyntheticEvent,clickedItem: CartItemType) => void;
   removeFromCart: (id: number) => void;
 };
 
@@ -32,7 +33,7 @@ const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => (
           size='small'
           disableElevation
           variant='contained'
-          onClick={() => addToCart(item)}
+          onClick={(e) => addToCart(e,item)}
         >
           +
         </Button>
