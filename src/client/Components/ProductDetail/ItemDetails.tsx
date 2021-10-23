@@ -5,6 +5,9 @@ import { Typography, Dialog, Paper, Tooltip } from '@material-ui/core';
 //style
 import { StyledItemDetails } from './ItemDetails.styles';
 
+//util
+import {formatPrice} from '../../utils/formatPrice'
+
 
 interface ItemDetailsProps {
 	openCheeseModal: boolean;
@@ -21,19 +24,20 @@ const ItemDetails: React.FC<ItemDetailsProps> = ({ openCheeseModal, setOpenChees
 			aria-describedby="modal-modal-description"
 		>
 			<StyledItemDetails>
-				<Paper variant="outlined" className={`image--wrapper`}>
-					<img alt={`an image `} src={`${selectedCheese.image}`} />
-					<Typography id="modal-item-title" variant="h6" component="h2" className={`item--title`}>
-						{selectedCheese.title}
-					</Typography>
-				</Paper>
-				<Tooltip title={`${selectedCheese.ca}`} placement="top" >
-					<Typography id="modal-item-description" component={"p"} className={`item--description`}>
-						{selectedCheese.description}
-					</Typography>
+				<Tooltip title={<p style={{ fontSize: "1.5rem", color: "#d8d7d5" }}>{selectedCheese.category}</p>} placement="bottom">
+					<Paper variant="outlined" className={`image--wrapper`}>
+						<img alt={`an image `} src={`${selectedCheese.image}`} />
+						<Typography id="modal-item-title" variant="h6" component="h2" className={`item--title`}>
+							{selectedCheese.title}
+						</Typography>
+					</Paper>
 				</Tooltip>
+				<Typography id="modal-item-description" component={"p"} className={`item--description`}>
+					{selectedCheese.description}
+				</Typography>
+
 				<Typography id="modal-item-price" component={"p"} className={`item--price`}>
-					{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(selectedCheese.price)}
+					{formatPrice(selectedCheese.price)}
 				</Typography>
 			</StyledItemDetails>
 		</Dialog>

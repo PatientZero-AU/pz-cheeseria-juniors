@@ -12,6 +12,7 @@ mongoose
 	.catch((err) => console.log("DB CONNECTION ERR => ", err));
 
 app.use(express.static("public"));
+app.use(express.json({ limit: "5mb" }));
 app.use(morgan("dev"));
 app.use(apiRouter);
 

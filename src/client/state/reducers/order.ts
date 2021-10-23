@@ -8,13 +8,15 @@ const initialState = {
 
 export default (state = initialState, action: OrderAction) => {
 	switch (action.type) {
-		case "SET_ORDER":
-			const { payload } = action;
-			return { ...state, orders: payload };
-		case "ORDER_RECEIVED":
+		case "CREATE_ORDER":
+			return { ...state, cartItems: [] };
+		case "GET_ORDERS":
+			const orders = action.payload;
+			return { ...state, orders: orders };
+		case "ORDER_STATUS":
 			const status = action.payload;
 			return { ...state, isOrderReceived: status };
 		default:
-			return state;
+			return { ...state };
 	}
 };

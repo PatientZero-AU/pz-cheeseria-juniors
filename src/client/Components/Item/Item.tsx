@@ -1,10 +1,9 @@
 import React, { SetStateAction, Dispatch, SyntheticEvent } from 'react';
 import Button from '@material-ui/core/Button';
-import { Modal } from '@material-ui/core';
-// Types
-import { CartItemType } from '../../../App';
 
-import { ICartItem } from '../../../types/cart';
+// Types
+import { CartItemType ,ICartItem} from '../../types';
+
 // Styles
 import { Wrapper } from './Item.styles';
 

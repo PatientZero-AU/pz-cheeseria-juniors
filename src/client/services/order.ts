@@ -1,4 +1,4 @@
-import { IOrder } from '../types/cart';
+import { IOrder } from '../types';
 import request from '../utils/request'
 
 

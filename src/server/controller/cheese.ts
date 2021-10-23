@@ -5,7 +5,7 @@ const mockCheese = require('../data/cheeses.json')
 export const getCheeses = async (req: Request, res: Response) => {
 	try {
 		//const cheeses = await Cheese.find()
-		return res.json(mockCheese);
+		res.json(mockCheese);
 	} catch (err) {
 		console.error(err);
 	}

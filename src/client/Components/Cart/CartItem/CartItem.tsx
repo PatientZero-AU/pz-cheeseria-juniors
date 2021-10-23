@@ -1,7 +1,7 @@
 import Button from '@material-ui/core/Button';
 import { SyntheticEvent } from 'react';
 // Types
-import { CartItemType } from '../../../App';
+import { CartItemType } from '../../../types';
 // Styles
 import { Wrapper } from './CartItem.styles';
 

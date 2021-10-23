@@ -7,9 +7,10 @@ export const StyledItemDetails = styled.div`
 	.image--wrapper {
 		position: relative;
 		width: 100%;
-		height: 60%;
+		height: 50%;
 		img {
 			width: 100%;
+			object-fit:cover;
 		}
 		.item--title {
 			color: white;
@@ -17,5 +18,8 @@ export const StyledItemDetails = styled.div`
 			left: 1rem;
 			bottom: 1rem;
 		}
+	}
+	.item--description {
+		font-style: oblique;
 	}
 `;

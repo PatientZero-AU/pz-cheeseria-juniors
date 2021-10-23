@@ -1,21 +1,20 @@
-import { takeLatest, put, call } from 'redux-saga/effects';
-import {requestGetOrders} from '../../../services/order';
+import { takeLatest, put, call } from "redux-saga/effects";
+import { requestGetOrders } from "../../../services/order";
 
 function* getOrders() {
 	try {
 		const response = yield call(requestGetOrders);
-		if (response.data.status === 200) {
-			yield put ({
-				type: 'SET_ORDER',
-				payload: response.data.data
+		if (response.status === 200) {
+			yield put({
+				type: "GET_ORDERS",
+				payload: response.data
 			});
 		}
-	}
-	catch {
-		console.log("error")
+	} catch (err) {
+		console.log("error", err);
 	}
 }
 
 export default function* watchGetOrderSaga() {
-	yield takeLatest('GET_ORDER', getOrders)
+	yield takeLatest("FETCH_ORDERS", getOrders);
 }

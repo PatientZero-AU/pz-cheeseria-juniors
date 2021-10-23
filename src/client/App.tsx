@@ -1,33 +1,38 @@
-import React, { useState, SyntheticEvent } from 'react';
+import React, { useState, SyntheticEvent, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useQuery } from 'react-query';
 // Components
-import Item from './Components/Cart/Item/Item';
+import Item from './Components/Item/Item';
 import Cart from './Components/Cart/Cart';
-import ItemDetails from './Components/ProductDetail/ItemDetails/ItemDetails';
+import ItemDetails from './Components/ProductDetail/ItemDetails';
 import Drawer from '@material-ui/core/Drawer';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import Grid from '@material-ui/core/Grid';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RestoreIcon from '@material-ui/icons/Restore';
 import Badge from '@material-ui/core/Badge';
+import Notification from './Components/Notification';
+
 // Styles
 import { Wrapper, StyledButton, StyledAppBar, HeaderTypography } from './App.styles';
-import { AppBar, Toolbar, Typography, Box, Dialog, Paper } from '@material-ui/core';
-// Types
-export type CartItemType = {
-	id: number;
-	category: string;
-	description: string;
-	image: string;
-	price: number;
-	title: string;
-	amount: number;
-};
+import { Toolbar, Typography } from '@material-ui/core';
 
+import RecentOrderList from './Components/Order/RecentOrderList';
+// Types
+import { CartItemType } from './types';
+
+
+import { IOrder } from './types';
+
+interface State {
+	order: { orders: IOrder[]; };
+}
 
 const getCheeses = async (): Promise<CartItemType[]> =>
 	await (await fetch(`api/cheeses`)).json();
 
+
+// -- main, cart, purchase
 const App = () => {
 	const [cartOpen, setCartOpen] = useState(false);
 	const [cartItems, setCartItems] = useState([] as CartItemType[]);
@@ -37,6 +42,20 @@ const App = () => {
 	);
 	const [openCheeseModal, setOpenCheeseModal] = useState(false);
 	const [selectedCheese, setSelectedCheese] = useState<CartItemType>();
+	const [openRecentPurchaseModal, setOpenRecentPurchaseModal] = useState<boolean>(false);
+
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		if (openRecentPurchaseModal == true) {
+			dispatch({
+				type: "FETCH_ORDERS"
+			});
+		}
+	}, [openRecentPurchaseModal]);
+
+	const orders: IOrder[] = useSelector((state: State) => state.order.orders);
+	const isOrderReceived = useSelector((state: any) => state.order.isOrderReceived);
 
 	const getTotalItems = (items: CartItemType[]) =>
 		items.reduce((ack: number, item) => ack + item.amount, 0);
@@ -75,7 +94,6 @@ const App = () => {
 	if (error) return <div>Something went wrong ...</div>;
 
 	return (
-
 		<Wrapper>
 			<StyledAppBar position="static">
 				<Toolbar>
@@ -85,7 +103,9 @@ const App = () => {
 						justify="space-between"
 						alignItems="center"
 					>
-						<StyledButton>
+						<StyledButton onClick={() => {
+							setOpenRecentPurchaseModal(true);
+						}}>
 							<RestoreIcon />
 							<Typography variant="subtitle2">
 								Recent Purchases
@@ -108,7 +128,6 @@ const App = () => {
 								Cart
 							</Typography>
 						</StyledButton>
-
 					</Grid>
 				</Toolbar>
 			</StyledAppBar>
@@ -118,14 +137,13 @@ const App = () => {
 					cartItems={cartItems}
 					addToCart={handleAddToCart}
 					removeFromCart={handleRemoveFromCart}
+					setCartItems={setCartItems}
 				/>
 			</Drawer>
 
-			{selectedCheese && selectedCheese.title && (<ItemDetails 
-			openCheeseModal={openCheeseModal}
-			setOpenCheeseModal={setOpenCheeseModal}
-			selectedCheese={selectedCheese}
-			/>)}
+			<Drawer anchor='left' open={openRecentPurchaseModal} onClose={() => setOpenRecentPurchaseModal(false)}>
+				<RecentOrderList orders={orders} />
+			</Drawer>
 
 			<Grid container spacing={3}>
 				{data?.map(item => (
@@ -134,9 +152,15 @@ const App = () => {
 					</Grid>
 				))}
 			</Grid>
-			
-		</Wrapper>
 
+			{selectedCheese && selectedCheese.title && (<ItemDetails
+				openCheeseModal={openCheeseModal}
+				setOpenCheeseModal={setOpenCheeseModal}
+				selectedCheese={selectedCheese}
+			/>)}
+
+			{isOrderReceived === 'succeed' ? <Notification message='We have received your order' /> : null}
+		</Wrapper>
 	);
 };
 
