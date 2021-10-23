@@ -107,7 +107,7 @@ const App = () => {
 							setOpenRecentPurchaseModal(true);
 						}}>
 							<RestoreIcon />
-							<Typography variant="subtitle2">
+							<Typography variant="subtitle2" ata-cy='open-order'>
 								Recent Purchases
 							</Typography>
 						</StyledButton>
@@ -116,7 +116,7 @@ const App = () => {
 							Welcome to Patient Zero's Cheeseria
 						</HeaderTypography>
 
-						<StyledButton onClick={() => setCartOpen(true)}>
+						<StyledButton onClick={() => setCartOpen(true)} data-cy='open-cart'>
 							<Badge
 								badgeContent={getTotalItems(cartItems)}
 								color='error'

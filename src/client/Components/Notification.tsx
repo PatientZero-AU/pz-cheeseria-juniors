@@ -3,9 +3,9 @@ import Snackbar from "@material-ui/core/Snackbar";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 
-export default function Notification({ message }) {
+export default function Notification({ message }: { message: string; }) {
 	const [open, setOpen] = React.useState(true);
-	function handleClose(event:SyntheticEvent, reason:any) {
+	function handleClose(event: SyntheticEvent, reason: any) {
 		if (reason === "clickaway") {
 			return;
 		}
