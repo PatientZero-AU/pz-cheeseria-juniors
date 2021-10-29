@@ -21,7 +21,10 @@ const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
         item={item}
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
-        buttonOnClick={() => handleAddToCart(item)}
+        buttonOnClick={() => {
+          handleAddToCart(item);
+          setDialogOpen(false);
+        }}
       />
       <Wrapper onClick={() => setDialogOpen(true)}>
         <img src={item.image} alt={item.title} />
