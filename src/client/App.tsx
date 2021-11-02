@@ -73,6 +73,8 @@ const App = () => {
     );
   };
 
+  const handleClearCart = () => setCartItems([]);
+
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong ...</div>;
 
@@ -115,6 +117,7 @@ const App = () => {
           cartItems={cartItems}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
+          clearCart={handleClearCart}
         />
       </Drawer>
 
