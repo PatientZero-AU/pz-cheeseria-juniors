@@ -17,6 +17,7 @@ import {
   HeaderTypography,
 } from "./App.styles";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import RecentPurchases from "./RecentPurchases/RecentPurchases";
 // Types
 export type CartItemType = {
   id: number;
@@ -33,6 +34,7 @@ const getCheeses = async (): Promise<CartItemType[]> =>
 
 const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
+  const [recentPurchasesOpen, setRecentPurchasesOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
   const { data, isLoading, error } = useQuery<CartItemType[]>(
     "cheeses",
@@ -88,7 +90,7 @@ const App = () => {
             justify="space-between"
             alignItems="center"
           >
-            <StyledButton>
+            <StyledButton onClick={() => setRecentPurchasesOpen(true)}>
               <RestoreIcon />
               <Typography variant="subtitle2">Recent Purchases</Typography>
             </StyledButton>
@@ -119,6 +121,15 @@ const App = () => {
           removeFromCart={handleRemoveFromCart}
           clearCart={handleClearCart}
         />
+      </Drawer>
+
+      <Drawer
+        anchor="left"
+        open={recentPurchasesOpen}
+        onClose={() => setRecentPurchasesOpen(false)}
+      >
+        <RecentPurchases />
+        {/* <h2>jdjdjndnj</h2> */}
       </Drawer>
 
       <Grid container spacing={3}>

@@ -42,7 +42,6 @@ const Cart: React.FC<Props> = ({
     if (isSuccess) {
       clearCart();
     }
-    console.log("running use effect");
   }, [isSuccess]);
 
   return (
