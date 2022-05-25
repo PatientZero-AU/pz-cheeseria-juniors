@@ -24,7 +24,7 @@ Once done, please notify us of your repository details and make sure it is publi
 
 ## Important Scripts
 
-This project was test with node v16.15.0 and npm v8.5.5.
+This project was tested with node v16.15.0 and npm v8.5.5.
 
 In the project directory, you can run:
 
