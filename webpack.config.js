@@ -62,7 +62,9 @@ const clientConfig = {
     ],
     target: 'web',
     devServer: {
-        contentBase: path.join(__dirname, 'public'),
+        static: {
+            directory: path.resolve(__dirname, 'public'),
+          },
         compress: true,
         port: 9000,
         proxy: {
