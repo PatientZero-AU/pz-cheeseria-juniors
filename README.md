@@ -24,11 +24,13 @@ Once done, please notify us of your repository details and make sure it is publi
 
 ## Important Scripts
 
+This project was test with node v16.15.0 and npm v8.5.5.
+
 In the project directory, you can run:
 
 ### `npm install`
 
-Installs package dependencies (node v14.15.0)
+Installs package dependencies (node v16.15.0)
 
 ### `npm start`
 
