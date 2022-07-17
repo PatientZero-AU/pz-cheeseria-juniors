@@ -11,22 +11,40 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import Badge from '@material-ui/core/Badge';
 // Styles
 import {
-  Wrapper,
-  StyledButton,
-  StyledAppBar,
   HeaderTypography,
+  StyledAppBar,
+  StyledButton,
+  Wrapper,
 } from './App.styles';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { Toolbar, Typography } from '@material-ui/core';
 import ItemDetails from './Cart/ItemDetails/ItemDetails';
+
 // Types
-export type CartItemType = {
+export interface Item {
   id: number;
-  category: string;
-  description: string;
-  image: string;
   price: number;
   title: string;
+  image: string;
+  category: string;
+  description: string;
+}
+
+export interface CartItemType extends Item {
   amount: number;
+}
+
+export type PurchasingItem = Pick<CartItemType, 'id' | 'amount' | 'price'>;
+
+const purchasingItemMapper = (cartItems: CartItemType[]): PurchasingItem[] => {
+  const purchasingItemsArray: PurchasingItem[] = [];
+  cartItems.forEach((item) => {
+    purchasingItemsArray.push({
+      id: item.id,
+      amount: item.amount,
+      price: item.price,
+    });
+  });
+  return purchasingItemsArray;
 };
 
 const getCheeses = async (): Promise<CartItemType[]> =>
@@ -87,6 +105,19 @@ const App = () => {
     setIsItemDetailsVisible((prep) => false);
     setDisplayingItem((prep) => null);
   };
+  const handleClickToPurchase = async () => {
+    try {
+      const sendOrderRes = await fetch('api/orders', {
+        method: 'post',
+        headers: { 'Content-type': 'application/json' },
+        body: JSON.stringify({ newOrder: purchasingItemMapper(cartItems) }),
+      });
+      if (sendOrderRes && sendOrderRes.status === 200) {
+        setCartOpen(false);
+      } else {
+    } catch (err) {
+    }
+  };
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong ...</div>;
@@ -130,6 +161,7 @@ const App = () => {
           cartItems={cartItems}
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
+          clickToPurchase={handleClickToPurchase}
         />
       </Drawer>
 
