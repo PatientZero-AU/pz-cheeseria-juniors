@@ -13,15 +13,15 @@ import {
 import { Wrapper } from './Orders.styles';
 //Types
 import { PurchasingItem, IOrder, RestResponse } from '../App';
-// interface Order {
-//   id: number;
-//   price: number;
-//   amount: number;
-// }
+interface IOderModel {
+  orderId: number;
+  items: PurchasingItem[];
+}
+
 const getOrders = async () => (await fetch('api/orders')).json();
 
 const Orders: React.FC = () => {
-  const { data, isLoading, error } = useQuery<RestResponse<IOrder>>(
+  const { data, isLoading, error } = useQuery<RestResponse<IOderModel>>(
     'orders',
     getOrders
   );
@@ -33,11 +33,12 @@ const Orders: React.FC = () => {
       <h2>Recent Purchases</h2>
       <div>
         {!data?.data?.length ? <p>No recent purchase order</p> : null}
-        {data?.data?.map((order: IOrder) => (
+        {data?.data?.map((order: IOderModel) => (
           <div className="order-card">
             <Card>
-              <CardHeader title="Order Details:" />
-              {order.map((item: PurchasingItem) => (
+              <CardHeader title={`Order ID: ${order.orderId}`} />
+              <p>Items in order:</p>
+              {order.items.map((item: PurchasingItem) => (
                 <CardContent>
                   <p>ID: {item.id}</p>
                   <p>Price: {item.price}</p>

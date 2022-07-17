@@ -130,7 +130,9 @@ const App = () => {
       const sendOrderRes: Response = await fetch('api/orders', {
         method: 'post',
         headers: { 'Content-type': 'application/json' },
-        body: JSON.stringify({ newOrder: purchasingItemMapper(cartItems) }),
+        body: JSON.stringify({
+          purchasingItems: purchasingItemMapper(cartItems),
+        }),
       });
       const sendOrderResp: RestResponse<IOrder> = await sendOrderRes.json();
       if (sendOrderResp && sendOrderResp.success) {
