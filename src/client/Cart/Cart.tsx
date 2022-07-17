@@ -9,6 +9,7 @@ type Props = {
   addToCart: (clickedItem: CartItemType) => void;
   removeFromCart: (id: number) => void;
   clickToPurchase: () => void;
+  clearCart: () => void;
 };
 
 const Cart: React.FC<Props> = ({
@@ -16,6 +17,7 @@ const Cart: React.FC<Props> = ({
   addToCart,
   removeFromCart,
   clickToPurchase,
+  clearCart,
 }) => {
   const calculateTotal = (items: CartItemType[]) =>
     items.reduce((ack: number, item) => ack + item.amount * item.price, 0);
@@ -34,9 +36,14 @@ const Cart: React.FC<Props> = ({
       ))}
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
       {cartItems.length && (
-        <StyledButton className="purchase-button" onClick={clickToPurchase}>
-          <Typography variant="h4">Purchase</Typography>
-        </StyledButton>
+        <div className="cart-buttons">
+          <StyledButton className="purchase-button" onClick={clickToPurchase}>
+            <Typography variant="h4">Purchase</Typography>
+          </StyledButton>
+          <StyledButton className="clear-button" onClick={clearCart}>
+            <Typography variant="h4">Clear Cart</Typography>
+          </StyledButton>
+        </div>
       )}
     </Wrapper>
   );

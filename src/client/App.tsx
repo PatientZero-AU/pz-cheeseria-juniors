@@ -1,14 +1,21 @@
 import React, { useState } from 'react';
 import { useQuery } from 'react-query';
 // Components
-import Item from './Cart/Item/Item';
-import Cart from './Cart/Cart';
-import Drawer from '@material-ui/core/Drawer';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import Grid from '@material-ui/core/Grid';
+import {
+  Badge,
+  Drawer,
+  Grid,
+  LinearProgress,
+  Snackbar,
+  Toolbar,
+  Typography,
+} from '@material-ui/core';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import RestoreIcon from '@material-ui/icons/Restore';
-import Badge from '@material-ui/core/Badge';
+import Item from './Cart/Item/Item';
+import Cart from './Cart/Cart';
+import ItemDetails from './Cart/ItemDetails/ItemDetails';
+
 // Styles
 import {
   HeaderTypography,
@@ -16,8 +23,6 @@ import {
   StyledButton,
   Wrapper,
 } from './App.styles';
-import { Toolbar, Typography } from '@material-ui/core';
-import ItemDetails from './Cart/ItemDetails/ItemDetails';
 
 // Types
 export interface Item {
@@ -34,6 +39,11 @@ export interface CartItemType extends Item {
 }
 
 export type PurchasingItem = Pick<CartItemType, 'id' | 'amount' | 'price'>;
+
+interface RestResponse {
+  success: boolean;
+  message: string;
+}
 
 const purchasingItemMapper = (cartItems: CartItemType[]): PurchasingItem[] => {
   const purchasingItemsArray: PurchasingItem[] = [];
@@ -54,9 +64,11 @@ const App = () => {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
   const [isItemDetailsVisible, setIsItemDetailsVisible] = useState(false);
+  const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
   const [displayingItem, setDisplayingItem] = useState<CartItemType | null>(
     null
   );
+  const [responseMessage, setResponseMessage] = useState<string>('');
 
   const { data, isLoading, error } = useQuery<CartItemType[]>(
     'cheeses',
@@ -83,6 +95,10 @@ const App = () => {
       return [...prev, { ...clickedItem, amount: 1 }];
     });
   };
+  const handleClearCart = (): void => {
+    setCartItems([]);
+    setCartOpen(false);
+  };
 
   const handleRemoveFromCart = (id: number) => {
     setCartItems((prev) =>
@@ -105,17 +121,25 @@ const App = () => {
     setIsItemDetailsVisible((prep) => false);
     setDisplayingItem((prep) => null);
   };
-  const handleClickToPurchase = async () => {
+  const handleClickToPurchase = async (): Promise<void> => {
     try {
-      const sendOrderRes = await fetch('api/orders', {
+      const sendOrderRes: Response = await fetch('api/orders', {
         method: 'post',
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ newOrder: purchasingItemMapper(cartItems) }),
       });
-      if (sendOrderRes && sendOrderRes.status === 200) {
+      const sendOrderResp: RestResponse = await sendOrderRes.json();
+      if (sendOrderResp && sendOrderResp.success) {
+        handleClearCart();
         setCartOpen(false);
+        setResponseMessage(sendOrderResp.message);
       } else {
+        setResponseMessage(sendOrderResp.message || 'Purchase failed!');
+      }
     } catch (err) {
+      setResponseMessage((err as Error).message);
+    } finally {
+      setIsSnackbarOpen(true);
     }
   };
 
@@ -162,6 +186,7 @@ const App = () => {
           addToCart={handleAddToCart}
           removeFromCart={handleRemoveFromCart}
           clickToPurchase={handleClickToPurchase}
+          clearCart={handleClearCart}
         />
       </Drawer>
 
@@ -183,6 +208,14 @@ const App = () => {
           handleDetailsClose={handleDetailsClose}
         />
       )}
+
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        open={isSnackbarOpen}
+        onClose={() => setIsSnackbarOpen(false)}
+        message={responseMessage}
+        autoHideDuration={3000}
+      />
     </Wrapper>
   );
 };
