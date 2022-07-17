@@ -1,7 +1,8 @@
+import * as React from 'react';
 import CartItem from './CartItem/CartItem';
 import { Wrapper } from './Cart.styles';
 import { CartItemType } from '../App';
-import { Button, Typography } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { StyledButton } from '../App.styles';
 
 type Props = {
@@ -37,7 +38,11 @@ const Cart: React.FC<Props> = ({
       <h2>Total: ${calculateTotal(cartItems).toFixed(2)}</h2>
       {cartItems.length && (
         <div className="cart-buttons">
-          <StyledButton className="purchase-button" onClick={clickToPurchase}>
+          <StyledButton
+            className="purchase-button"
+            data-cy="purchase-button"
+            onClick={clickToPurchase}
+          >
             <Typography variant="h4">Purchase</Typography>
           </StyledButton>
           <StyledButton className="clear-button" onClick={clearCart}>

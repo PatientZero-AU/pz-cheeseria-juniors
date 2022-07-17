@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import * as React from 'react';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 // Components
 import {
@@ -164,14 +165,19 @@ const App = () => {
           >
             <StyledButton onClick={() => setRecentPurchasesOpen(true)}>
               <RestoreIcon />
-              <Typography variant="subtitle2">Recent Purchases</Typography>
+              <Typography variant="subtitle2" data-cy="recent-purchases">
+                Recent Purchases
+              </Typography>
             </StyledButton>
 
             <HeaderTypography variant="h3" noWrap>
               Welcome to Patient Zero's Cheeseria
             </HeaderTypography>
 
-            <StyledButton onClick={() => setCartOpen(true)}>
+            <StyledButton
+              data-cy="go-to-cart"
+              onClick={() => setCartOpen(true)}
+            >
               <Badge
                 badgeContent={getTotalItems(cartItems)}
                 color="error"
@@ -227,6 +233,7 @@ const App = () => {
         onClose={() => setIsSnackbarOpen(false)}
         message={responseMessage}
         autoHideDuration={3000}
+        data-cy="response-message"
       />
     </Wrapper>
   );

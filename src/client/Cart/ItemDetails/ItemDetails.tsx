@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import * as React from 'react';
 
 // material-ui
 import {
@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogActions,
   DialogContent,
-  DialogContentText,
   Typography,
   useTheme,
 } from '@material-ui/core';

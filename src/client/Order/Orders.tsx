@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { useQuery } from 'react-query';
 // Material UI
 import {
@@ -12,7 +12,7 @@ import {
 // Styles
 import { Wrapper } from './Orders.styles';
 //Types
-import { PurchasingItem, IOrder, RestResponse } from '../App';
+import { PurchasingItem, RestResponse } from '../App';
 interface IOderModel {
   orderId: number;
   items: PurchasingItem[];
@@ -33,16 +33,34 @@ const Orders: React.FC = () => {
       <h2>Recent Purchases</h2>
       <div>
         {!data?.data?.length ? <p>No recent purchase order</p> : null}
-        {data?.data?.map((order: IOderModel) => (
+        {data?.data?.map((order: IOderModel, index: number) => (
           <div className="order-card">
             <Card>
               <CardHeader title={`Order ID: ${order.orderId}`} />
               <p>Items in order:</p>
               {order.items.map((item: PurchasingItem) => (
                 <CardContent>
-                  <p>ID: {item.id}</p>
+                  <p>
+                    {index}ID:
+                    <span
+                      data-cy={`${index === 0 ? 'latest-' : ''}order-item-id-${
+                        item.id
+                      }`}
+                    >
+                      {item.id}
+                    </span>
+                  </p>
                   <p>Price: {item.price}</p>
-                  <p>Amount: {item.amount}</p>
+                  <p>
+                    Amount:
+                    <span
+                      data-cy={`${
+                        index === 0 ? 'latest-' : ''
+                      }order-item-amount-${item.id}`}
+                    >
+                      {item.amount}
+                    </span>
+                  </p>
                 </CardContent>
               ))}
             </Card>
