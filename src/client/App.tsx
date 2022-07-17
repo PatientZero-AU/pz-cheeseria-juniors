@@ -15,6 +15,7 @@ import RestoreIcon from '@material-ui/icons/Restore';
 import Item from './Cart/Item/Item';
 import Cart from './Cart/Cart';
 import ItemDetails from './Cart/ItemDetails/ItemDetails';
+import Orders from './Order/Orders';
 
 // Styles
 import {
@@ -39,10 +40,12 @@ export interface CartItemType extends Item {
 }
 
 export type PurchasingItem = Pick<CartItemType, 'id' | 'amount' | 'price'>;
+export interface IOrder extends Array<PurchasingItem> {}
 
-interface RestResponse {
+export interface RestResponse<T> {
   success: boolean;
   message: string;
+  data?: T[];
 }
 
 const purchasingItemMapper = (cartItems: CartItemType[]): PurchasingItem[] => {
@@ -65,6 +68,7 @@ const App = () => {
   const [cartItems, setCartItems] = useState([] as CartItemType[]);
   const [isItemDetailsVisible, setIsItemDetailsVisible] = useState(false);
   const [isSnackbarOpen, setIsSnackbarOpen] = useState(false);
+  const [recentPurchasesOpen, setRecentPurchasesOpen] = useState(false);
   const [displayingItem, setDisplayingItem] = useState<CartItemType | null>(
     null
   );
@@ -128,7 +132,7 @@ const App = () => {
         headers: { 'Content-type': 'application/json' },
         body: JSON.stringify({ newOrder: purchasingItemMapper(cartItems) }),
       });
-      const sendOrderResp: RestResponse = await sendOrderRes.json();
+      const sendOrderResp: RestResponse<IOrder> = await sendOrderRes.json();
       if (sendOrderResp && sendOrderResp.success) {
         handleClearCart();
         setCartOpen(false);
@@ -156,7 +160,7 @@ const App = () => {
             justify="space-between"
             alignItems="center"
           >
-            <StyledButton>
+            <StyledButton onClick={() => setRecentPurchasesOpen(true)}>
               <RestoreIcon />
               <Typography variant="subtitle2">Recent Purchases</Typography>
             </StyledButton>
@@ -179,7 +183,13 @@ const App = () => {
           </Grid>
         </Toolbar>
       </StyledAppBar>
-
+      <Drawer
+        anchor="left"
+        open={recentPurchasesOpen}
+        onClose={() => setRecentPurchasesOpen(false)}
+      >
+        <Orders />
+      </Drawer>
       <Drawer anchor="right" open={cartOpen} onClose={() => setCartOpen(false)}>
         <Cart
           cartItems={cartItems}
