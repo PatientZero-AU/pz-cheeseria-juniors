@@ -12,20 +12,20 @@ export const Wrapper = styled.div`
 
 export const StyledButton = withStyles({
   label: {
-    flexDirection: "column"
-  }
+    flexDirection: 'column',
+  },
 })(IconButton);
 
 export const StyledAppBar = styled(AppBar)`
-  background : white;
+  background: white;
   margin-bottom: 15px;
   border-radius: 20px;
 `;
 
 export const HeaderTypography = withStyles({
   root: {
-    color: "black",
-    WebkitTextStroke: "0.5px darkgoldenrod",
-    fontStyle: "italic"
-  }
+    color: 'black',
+    WebkitTextStroke: '0.5px darkgoldenrod',
+    fontStyle: 'italic',
+  },
 })(Typography);

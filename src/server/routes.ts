@@ -1,5 +1,4 @@
 import * as express from 'express';
-import { promises as fs } from 'fs';
 import CheesesController from './controllers/cheeses.controller';
 import OrdersController from './controllers/orders.controller';
 

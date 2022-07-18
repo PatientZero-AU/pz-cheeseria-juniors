@@ -34,12 +34,12 @@ const Orders: React.FC = () => {
       <div>
         {!data?.data?.length ? <p>No recent purchase order</p> : null}
         {data?.data?.map((order: IOderModel, index: number) => (
-          <div className="order-card">
+          <div key={index} className="order-card">
             <Card>
               <CardHeader title={`Order ID: ${order.orderId}`} />
               <p>Items in order:</p>
               {order.items.map((item: PurchasingItem) => (
-                <CardContent>
+                <CardContent key={item.id}>
                   <p>
                     {index}ID:
                     <span

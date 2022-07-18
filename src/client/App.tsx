@@ -41,7 +41,7 @@ export interface CartItemType extends Item {
 }
 
 export type PurchasingItem = Pick<CartItemType, 'id' | 'amount' | 'price'>;
-export interface IOrder extends Array<PurchasingItem> {}
+export type IOrder = Array<PurchasingItem>;
 
 export interface RestResponse<T> {
   success: boolean;
@@ -119,12 +119,12 @@ const App = () => {
   };
 
   const handleItemClick = (item: CartItemType) => {
-    setIsItemDetailsVisible((prep) => true);
-    setDisplayingItem((prep) => item);
+    setIsItemDetailsVisible(() => true);
+    setDisplayingItem(() => item);
   };
   const handleDetailsClose = () => {
-    setIsItemDetailsVisible((prep) => false);
-    setDisplayingItem((prep) => null);
+    setIsItemDetailsVisible(() => false);
+    setDisplayingItem(() => null);
   };
   const handleClickToPurchase = async (): Promise<void> => {
     try {
@@ -171,7 +171,7 @@ const App = () => {
             </StyledButton>
 
             <HeaderTypography variant="h3" noWrap>
-              Welcome to Patient Zero's Cheeseria
+              Welcome to Patient Zero&apos;s Cheeseria
             </HeaderTypography>
 
             <StyledButton
