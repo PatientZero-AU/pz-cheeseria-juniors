@@ -2,29 +2,15 @@ import * as React from 'react';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 // Components
-import {
-  Badge,
-  Drawer,
-  Grid,
-  LinearProgress,
-  Snackbar,
-  Toolbar,
-  Typography,
-} from '@material-ui/core';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
-import RestoreIcon from '@material-ui/icons/Restore';
+import { Drawer, Grid, LinearProgress, Snackbar } from '@material-ui/core';
 import Item from './Cart/Item/Item';
 import Cart from './Cart/Cart';
 import ItemDetails from './Cart/ItemDetails/ItemDetails';
 import Orders from './Order/Orders';
+import Navbar from './Navbar';
 
 // Styles
-import {
-  HeaderTypography,
-  StyledAppBar,
-  StyledButton,
-  Wrapper,
-} from './App.styles';
+import { Wrapper } from './App.styles';
 
 // Types
 export interface Item {
@@ -117,7 +103,6 @@ const App = () => {
       }, [] as CartItemType[])
     );
   };
-
   const handleItemClick = (item: CartItemType) => {
     setIsItemDetailsVisible(() => true);
     setDisplayingItem(() => item);
@@ -155,42 +140,11 @@ const App = () => {
 
   return (
     <Wrapper>
-      <StyledAppBar position="static">
-        <Toolbar>
-          <Grid
-            container
-            direction="row"
-            justify="space-between"
-            alignItems="center"
-          >
-            <StyledButton onClick={() => setRecentPurchasesOpen(true)}>
-              <RestoreIcon />
-              <Typography variant="subtitle2" data-cy="recent-purchases">
-                Recent Purchases
-              </Typography>
-            </StyledButton>
-
-            <HeaderTypography variant="h3" noWrap>
-              Welcome to Patient Zero&apos;s Cheeseria
-            </HeaderTypography>
-
-            <StyledButton
-              data-cy="go-to-cart"
-              onClick={() => setCartOpen(true)}
-            >
-              <Badge
-                badgeContent={getTotalItems(cartItems)}
-                color="error"
-                data-cy="badge-count"
-              >
-                <AddShoppingCartIcon />
-              </Badge>
-
-              <Typography variant="subtitle2">Cart</Typography>
-            </StyledButton>
-          </Grid>
-        </Toolbar>
-      </StyledAppBar>
+      <Navbar
+        totalItems={getTotalItems(cartItems)}
+        openCart={() => setCartOpen(true)}
+        openRecentPurchases={() => setRecentPurchasesOpen(true)}
+      />
       <Drawer
         anchor="left"
         open={recentPurchasesOpen}
