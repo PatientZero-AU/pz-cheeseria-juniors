@@ -1,6 +1,6 @@
 import * as React from 'react';
-
-import Button from '@material-ui/core/Button';
+// Components
+import { Button } from '@material-ui/core';
 // Types
 import { CartItemType } from '../../App';
 // Styles

@@ -1,14 +1,17 @@
 import * as React from 'react';
+// Components
 import { Badge, Grid, Toolbar, Typography } from '@material-ui/core';
-import { HeaderTypography, StyledAppBar, StyledButton } from './App.styles';
 import RestoreIcon from '@material-ui/icons/Restore';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+// Styles
+import { HeaderTypography, StyledAppBar, StyledButton } from './App.styles';
 
 type Props = {
   totalItems: number;
   openCart: () => void;
   openRecentPurchases: () => void;
 };
+
 const Navbar: React.FC<Props> = ({
   totalItems,
   openCart,

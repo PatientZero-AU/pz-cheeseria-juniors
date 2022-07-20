@@ -1,9 +1,12 @@
 import * as React from 'react';
-import CartItem from './CartItem/CartItem';
-import { Wrapper } from './Cart.styles';
-import { CartItemType } from '../App';
+// Components
 import { Typography } from '@material-ui/core';
+import CartItem from './CartItem/CartItem';
+// Types
+import { CartItemType } from '../App';
+// Styles
 import { StyledButton } from '../App.styles';
+import { Wrapper } from './Cart.styles';
 
 type Props = {
   cartItems: CartItemType[];

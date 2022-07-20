@@ -8,10 +8,6 @@ import Cart from './Cart/Cart';
 import ItemDetails from './Cart/ItemDetails/ItemDetails';
 import Orders from './Order/Orders';
 import Navbar from './Navbar';
-
-// Styles
-import { Wrapper } from './App.styles';
-
 // Types
 export interface Item {
   id: number;
@@ -21,13 +17,17 @@ export interface Item {
   category: string;
   description: string;
 }
+// Styles
+import { Wrapper } from './App.styles';
 
 export interface CartItemType extends Item {
   amount: number;
 }
 
+// PurchasingItem is the type of data we send back to server
+// to create new order as we do not need to send other extra details.
 export type PurchasingItem = Pick<CartItemType, 'id' | 'amount' | 'price'>;
-export type IOrder = Array<PurchasingItem>;
+export type OrderType = Array<PurchasingItem>;
 
 export interface RestResponse<T> {
   success: boolean;
@@ -35,6 +35,11 @@ export interface RestResponse<T> {
   data?: T[];
 }
 
+/**
+ * @desc Mapping CartItems into PurchasingItems
+ * @returns PurchasingItem[] to send to api to create new order
+ * @param cartItems
+ */
 const purchasingItemMapper = (cartItems: CartItemType[]): PurchasingItem[] => {
   const purchasingItemsArray: PurchasingItem[] = [];
   cartItems.forEach((item) => {
@@ -120,7 +125,7 @@ const App = () => {
           purchasingItems: purchasingItemMapper(cartItems),
         }),
       });
-      const sendOrderResp: RestResponse<IOrder> = await sendOrderRes.json();
+      const sendOrderResp: RestResponse<OrderType> = await sendOrderRes.json();
       if (sendOrderResp && sendOrderResp.success) {
         handleClearCart();
         setCartOpen(false);

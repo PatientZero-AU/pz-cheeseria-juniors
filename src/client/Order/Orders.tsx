@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useQuery } from 'react-query';
-// Material UI
+// Component
 import {
   Card,
   CardContent,
@@ -8,11 +8,11 @@ import {
   Divider,
   LinearProgress,
 } from '@material-ui/core';
-// Component
-// Styles
-import { Wrapper } from './Orders.styles';
 //Types
 import { PurchasingItem, RestResponse } from '../App';
+// Styles
+import { Wrapper } from './Orders.styles';
+
 interface IOderModel {
   orderId: number;
   items: PurchasingItem[];
