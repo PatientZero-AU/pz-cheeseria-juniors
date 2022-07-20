@@ -1,0 +1,13 @@
+FROM node:16.15.0-alpine
+WORKDIR /usr/local/apps/myapp
+
+COPY package.json ./
+RUN npm install --legacy-peer-deps && npm cache clean --force
+
+WORKDIR /usr/local/apps/myapp/dev
+
+COPY src ./src
+
+EXPOSE 8888
+
+CMD ["npm", "start"]

@@ -38,6 +38,21 @@ Builds and runs the app in the development mode.\
 The browser will be automatically launched under [http://localhost:9000](http://localhost:9000).
 The server backend will start listening on [http://localhost:3000](http://localhost:3000)
 
+### Docker Users
+
+If you want to run the project in docker with hot reload,
+please run following commands to get started
+
+```bash
+docker-compose up
+```
+If it is the first time you might want to run the command below and
+wait for a while for downloading and building the docker image.
+```bash
+docker-compose --build
+```
+Then you could visit the app under [http://localhost:8888](http://localhost:8888)
+
 ### Cypress.io
 
 You will open the e2e folder, then run following commands to get started

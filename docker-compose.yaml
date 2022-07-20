@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  myapp:
+    container_name: react-shopping-cart
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8888:9000"
+    volumes:
+      - ./:/usr/local/apps/myapp/dev
+      - exclude:/usr/local/apps/myapp/dev/node_modules/
+volumes:
+  exclude:
